@@ -6,6 +6,7 @@ import sys
 import logging
 import timeit
 import tempfile
+from datetime import datetime
 
 from pympler import asizeof
 from pycoshark.utils import get_base_argparser
@@ -33,22 +34,36 @@ def run_inducing(log, input_path, args):
     # everything with label='validated_bugfix' uses commit.fixed_issue_ids
     # szz uses commit.szz_issue_ids
     im.write_bug_inducing(label='adjustedszz_bugfix', inducing_strategy='all', java_only=False, affected_versions=False, ignore_refactorings=False, name='SZZ')  # plain szz
-    #im.write_bug_inducing(label='issueonly_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=True, name='JL+R')  # best automatic szz
+    # im.write_bug_inducing(label='issueonly_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=True, name='JL+R')  # best automatic szz
 
-    #im.write_bug_inducing(label='validated_bugfix', inducing_strategy='all', java_only=False, affected_versions=False, ignore_refactorings=False, name='JLMIV')  # plain szz validated labels
-    #im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=False, name='JLMIV+')  # improved szz validated labels
-    #im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=True, ignore_refactorings=False, name='JLMIV+AV')  # improved szz validated labels, affected versions
+    # im.write_bug_inducing(label='validated_bugfix', inducing_strategy='all', java_only=False, affected_versions=False, ignore_refactorings=False, name='JLMIV')  # plain szz validated labels
+    # im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=False, name='JLMIV+')  # improved szz validated labels
+    # im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=True, ignore_refactorings=False, name='JLMIV+AV')  # improved szz validated labels, affected versions
 
-    #im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=True, ignore_refactorings=True, name='JLMIV+RAV')  # best + AV
+    # im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=True, ignore_refactorings=True, name='JLMIV+RAV')  # best + AV
 
-    #im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=True, name='JLMIV+R')  # improved szz validated labels, without refactorings
+    # im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=True, name='JLMIV+R')  # improved szz validated labels, without refactorings
 
-    #im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=False, name='JLMIVLV', only_validated_bugfix_lines=True)  # improved szz validated labels, only validated lines
+    # im.write_bug_inducing(label='validated_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=False, name='JLMIVLV', only_validated_bugfix_lines=True)  # improved szz validated labels, only validated lines
 
-    #im.write_bug_inducing(label='issuefasttext_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=True, name='JLIP+R')
+    # im.write_bug_inducing(label='issuefasttext_bugfix', inducing_strategy='code_only', java_only=True, affected_versions=False, ignore_refactorings=True, name='JLIP+R')
 
 
 def main(args):
+    log = logging.getLogger('inducingSHARK')
+
+    i = logging.FileHandler(filename=f"inducingSHARK_{args.project_name}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log", mode='w')
+    e = logging.FileHandler(filename=f"inducingSHARK_{args.project_name}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.error.log", mode='w')
+
+    i.setLevel(logging.DEBUG)
+    e.setLevel(logging.WARN)
+
+    i.setFormatter(logging.Formatter("%(asctime)s %(levelname)8s %(message)s"))
+    e.setFormatter(logging.Formatter("%(asctime)s %(levelname)8s %(message)s"))
+
+    log.addHandler(i)
+    log.addHandler(e)
+
     if args.log_level:
         log.setLevel(args.log_level)
 
