@@ -52,8 +52,8 @@ def run_inducing(log, input_path, args):
 def main(args):
     log = logging.getLogger('inducingSHARK')
 
-    i = logging.FileHandler(filename=f"inducingSHARK_{args.project_name}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log", mode='w')
-    e = logging.FileHandler(filename=f"inducingSHARK_{args.project_name}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.error.log", mode='w')
+    i = logging.FileHandler(filename=f"/workspaces/logs/inducingSHARK_{args.project_name}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log", mode='w')
+    e = logging.FileHandler(filename=f"/workspaces/logs/inducingSHARK_{args.project_name}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.error.log", mode='w')
 
     i.setLevel(logging.DEBUG)
     e.setLevel(logging.WARN)
