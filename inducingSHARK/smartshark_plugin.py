@@ -15,7 +15,7 @@ from inducing import InducingMiner
 # set up logging, we log everything to stdout except for errors which go to stderr
 # this is then picked up by serverSHARK
 log = logging.getLogger('inducingSHARK')
-log.setLevel(logging.INFO)
+log.setLevel(logging.DEBUG)
 i = logging.StreamHandler(sys.stdout)
 e = logging.StreamHandler(sys.stderr)
 
