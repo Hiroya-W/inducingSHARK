@@ -64,8 +64,9 @@ def main(args):
     log.addHandler(i)
     log.addHandler(e)
 
-    if args.log_level:
-        log.setLevel(args.log_level)
+    # if args.log_level:
+    #     log.setLevel(args.log_level)
+    log.info(f"log level: {args.log_level}")
 
     # timing
     start = timeit.default_timer()
